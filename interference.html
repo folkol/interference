@@ -14,7 +14,7 @@
 		}
 		</style>
 	</head>
-<body><canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000; float: left;">
+<body><canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000; float: left;">
 	</canvas>
 	<p>ax: <span id="ax"></span></p>
 	<p>ay: <span id="ay"></span></p>
@@ -28,21 +28,21 @@
 	
 	var nisse=0;
 	mousex = 200;
-	mousey = 400;
+	mousey = 300;
 	function doShit() {
 		var c = document.getElementById("myCanvas");
 		var ctx = c.getContext("2d");
-		ctx.clearRect(0, 0, 1000, 1000);
+		ctx.clearRect(0, 0, 600, 400);
 
 		nisse+=0.1;
-		var ax = 400;
+		var ax = 300;
 		var bx = mousex;
-		var ay = 300;
+		var ay = 200;
 		var by = mousey;
 		var r = 10;
 		var dr = nisse % r;
 		var starti = 0;
-		var endi = 200;
+		var endi = 120;
 
 		var d = Math.sqrt((bx-ax)*(bx-ax) + (by-ay)*(by-ay));
 		$("#ax").html(ax);
