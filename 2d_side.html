@@ -17,18 +17,31 @@
 		amplitude: 50,
 		wavelength: 50,
 		speed: 1,
-		color: '#f00'
+		color: 'rgba(255,0,0,0.3)'
+	}
+
+	blue_wave = {
+		phaseshift: 0,
+		amplitude: 50,
+		wavelength: 50,
+		speed: -1,
+		color: 'rgba(0,0,255,0.5)'
 	}
 
 	function render() {
-		function renderWave(wave) {
-			wave.phaseshift += wave.speed;
+		function renderWave(waves) {
+			var superpositionedWave = waves.length > 1;
+			waves[0].phaseshift += waves[0].speed;
 
 			ctx.beginPath();
-			ctx.strokeStyle = wave.color;
+			ctx.strokeStyle = superpositionedWave ? "#000" : waves[0].color;
+			ctx.lineWidth = superpositionedWave ? 3 : 1;
 			for(x = 0; x <= settings.canvas.width; x+=10) {
 				var dy = settings.canvas.height / 2;
-				var y = dy + wave.amplitude * Math.sin((x + wave.phaseshift) / wave.wavelength);
+				var y = dy;
+				waves.forEach(function(wave) {
+					y += wave.amplitude * Math.sin((x + wave.phaseshift) / wave.wavelength);
+				})
 				ctx.lineTo(x, y);
 			}
 			ctx.stroke();
@@ -38,8 +51,9 @@
 		var ctx = c.getContext("2d");
 		ctx.clearRect(0, 0, settings.canvas.width, settings.canvas.height);
 
-		renderWave(red_wave);
-
+		renderWave([red_wave]);
+		renderWave([blue_wave]);
+		renderWave([red_wave, blue_wave]);
 	}
 	window.onload=function() {
 		setInterval(render, 1000/60);
