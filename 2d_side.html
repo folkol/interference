@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>title</title>
+	<script>
+		var phaseshift = 0;
+		var amplitude = 50;
+		var wavelength = 50;
+		var speed = 1;
+
+		function render() {
+			phaseshift += speed;
+
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+			ctx.clearRect(0, 0, 600, 400);
+
+			ctx.beginPath();
+			ctx.strokeStyle = '#f00';
+			for(x = 0; x < 600; x++) {
+				var y = 200 + amplitude * Math.sin((x + phaseshift) / wavelength);
+				ctx.lineTo(x, y);
+			}
+			ctx.stroke();
+		}
+		window.onload=function() {
+			setInterval(render, 1000/60);
+		};
+	</script>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000; float: left;">
+	</canvas>
+	<p>ax: <span id="ax"></span></p>
+</body>
+</html>
