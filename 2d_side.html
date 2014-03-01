@@ -9,7 +9,7 @@
 			width: 600,
 			height: 400
 		},
-		granularity: 10
+		roughness: 100
 	}
 
 	red_wave = {
@@ -36,7 +36,7 @@
 			ctx.beginPath();
 			ctx.strokeStyle = superpositionedWave ? "#000" : waves[0].color;
 			ctx.lineWidth = superpositionedWave ? 3 : 1;
-			for(x = 0; x <= settings.canvas.width; x+=10) {
+			for(x = 0; x <= settings.canvas.width; x += settings.roughness) {
 				var dy = settings.canvas.height / 2;
 				var y = dy;
 				waves.forEach(function(wave) {
