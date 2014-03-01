@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>title</title>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<style>
+		body {
+			margin: 0px;
+		}
+		html {
+			margin: 0px;
+			padding: 0px;
+		}
+		</style>
+	</head>
+<body><canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000; float: left;">
+	</canvas>
+	<p>ax: <span id="ax"></span></p>
+	<p>ay: <span id="ay"></span></p>
+	<p>bx: <span id="bx"></span></p>
+	<p>by: <span id="by"></span></p>
+	<p>r: <span id="r"></span></p>
+	<p>d: <span id="d"></span></p>
+
+</body>
+	<script>
+	
+	var nisse=0;
+	mousex = 200;
+	mousey = 400;
+	function doShit() {
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		ctx.clearRect(0, 0, 1000, 1000);
+
+		nisse+=0.1;
+		var ax = 400;
+		var bx = mousex;
+		var ay = 300;
+		var by = mousey;
+		var r = 10;
+		var dr = nisse % r;
+		var starti = 0;
+		var endi = 200;
+
+		var d = Math.sqrt((bx-ax)*(bx-ax) + (by-ay)*(by-ay));
+		$("#ax").html(ax);
+		$("#ay").html(ay);
+		$("#bx").html(bx);
+		$("#by").html(by);
+		$("#r").html(r);
+		$("#d").html(d);
+
+
+		for(var i = starti; i < endi; i++) {
+			ctx.strokeStyle = '#000000';
+			ctx.beginPath();
+			ctx.arc(ax,ay,r*i + dr,0,2*Math.PI);
+			ctx.stroke();
+
+			ctx.beginPath();
+			ctx.arc(bx,by,r*i + dr,0,2*Math.PI);
+			ctx.stroke();
+
+			ctx.strokeStyle = '#ff0000';
+			ctx.beginPath();
+			ctx.arc(ax,ay,r*(0.5 + i)+dr,0,2*Math.PI);
+			ctx.stroke();
+
+			ctx.beginPath();
+			ctx.arc(bx,by,r*(0.5 + i)+dr,0,2*Math.PI);
+			ctx.stroke();
+		}
+	}
+	$(function() {
+		$(document).mousedown(function(e){
+        	buttonDown = true;
+	    });
+	    $(document).mouseup(function(e){
+	        buttonDown = false;
+	    });
+		$("#myCanvas").mousemove(function(event) {
+			if(buttonDown) {
+				mousex = event.clientX;
+				mousey = event.clientY;
+			}
+		});
+		setInterval(doShit, 1000/60);
+	});
+	doShit();
+	</script>
+</html>
