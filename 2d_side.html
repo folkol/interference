@@ -3,6 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<title>title</title>
+	<style>
+	div.controller {
+		/*background-color: #ccc;*/
+		overflow: hidden;
+		margin: 5px;
+		width: 180px;
+		padding: 5px;
+		border: solid 1px #C0C0C0;
+	}
+	div.controller h3 {
+		margin: 0px;
+		padding: 0px;
+	}
+	</style>
 	<script>
 	settings =  {
 		canvas: {
@@ -67,7 +81,6 @@
 				ctx.lineTo(c + 0.5, settings.canvas.height);
 			}
 			ctx.stroke();
-
 		}
 
 		var c = document.getElementById("myCanvas");
@@ -79,14 +92,26 @@
 		renderWave(blue_wave);
 		renderSuperposition([red_wave, blue_wave]);
 	}
+
 	window.onload=function() {
 		setInterval(render, 1000/60);
 	};
 	</script>
 </head>
 <body>
-	<canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000; float: left;">
+	<canvas id="myCanvas" width="600" height="400" style="margin-right: 7px; border:1px solid #000000; float: left;">
 	</canvas>
-	<p>ax: <span id="ax"></span></p>
+	<div class="controller">
+		<h3>Red wave</h3>
+		<label>Speed:</label><br><input type="range" min="-10" max="10" step="0.1" onchange="red_wave.speed=Number(this.value);">
+		<label>Amplitude:</label><br><input type="range" min="0" max="200" step="0.1" onchange="red_wave.amplitude=Number(this.value);">
+		<label>Wavelength:</label><br><input type="range" min="10" max="100" step="0.1" onchange="red_wave.wavelength=Number(this.value);">
+	</div>
+		<div class="controller">
+		<h3>Blue wave</h3>
+		<label>Speed:</label><br><input type="range" min="-10" max="10" step="0.1" onchange="blue_wave.speed=Number(this.value);">
+		<label>Amplitude:</label><br><input type="range" min="0" max="200" step="0.1" onchange="blue_wave.amplitude=Number(this.value);">
+		<label>Wavelength:</label><br><input type="range" min="10" max="100" step="0.1" onchange="blue_wave.wavelength=Number(this.value);">
+	</div>
 </body>
 </html>
