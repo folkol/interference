@@ -12,6 +12,9 @@
 		padding: 5px;
 		border: solid 1px #C0C0C0;
 	}
+	div.controller * {
+		display: block;
+	}
 	div.controller h3 {
 		margin: 0px;
 		padding: 0px;
@@ -23,7 +26,9 @@
 			width: 600,
 			height: 400
 		},
-		roughness: 5
+		roughness: 10,
+		animationspeed: 1000/60,
+		paused: false
 	}
 
 	red_wave = {
@@ -43,13 +48,14 @@
 	}
 
 	function render() {
+		if(settings.paused) return;
 		function renderWave(wave) {
 			wave.phaseshift += wave.speed;
 
 			ctx.beginPath();
 			ctx.strokeStyle = wave.color;
 			ctx.lineWidth = 1;
-			for(x = 0; x <= settings.canvas.width; x += settings.roughness) {
+			for(x = 0; x < settings.canvas.width + settings.roughness; x += settings.roughness) {
 				var dy = settings.canvas.height / 2;
 				var y = dy += wave.amplitude * Math.sin((x + wave.phaseshift) / wave.wavelength);
 				ctx.lineTo(x, y);
@@ -60,7 +66,7 @@
 			ctx.beginPath();
 			ctx.strokeStyle = "#000"
 			ctx.lineWidth = 3;
-			for(x = 0; x <= settings.canvas.width; x += settings.roughness) {
+			for(x = 0; x < settings.canvas.width + settings.roughness; x += settings.roughness) {
 				var dy = settings.canvas.height / 2;
 				var y = dy;
 				waves.forEach(function(wave) {
@@ -94,7 +100,7 @@
 	}
 
 	window.onload=function() {
-		setInterval(render, 1000/60);
+		setInterval(render, settings.animationspeed);
 	};
 	</script>
 </head>
@@ -102,16 +108,21 @@
 	<canvas id="myCanvas" width="600" height="400" style="margin-right: 7px; border:1px solid #000000; float: left;">
 	</canvas>
 	<div class="controller">
+		<h3>Settings</h3>
+		<label>Roughness:</label><input type="range" min="1" max="50" step="1" onchange="settings.roughness=Number(this.value);">
+		<label>Pause:</label><input type="checkbox" onchange="settings.paused=this.checked">
+	</div>
+	<div class="controller">
 		<h3>Red wave</h3>
-		<label>Speed:</label><br><input type="range" min="-10" max="10" step="0.1" onchange="red_wave.speed=Number(this.value);">
-		<label>Amplitude:</label><br><input type="range" min="0" max="200" step="0.1" onchange="red_wave.amplitude=Number(this.value);">
-		<label>Wavelength:</label><br><input type="range" min="10" max="100" step="0.1" onchange="red_wave.wavelength=Number(this.value);">
+		<label>Speed:</label><input type="range" min="-10" max="10" step="0.1" onchange="red_wave.speed=Number(this.value);">
+		<label>Amplitude:</label><input type="range" min="0" max="200" step="0.1" onchange="red_wave.amplitude=Number(this.value);">
+		<label>Wavelength:</label><input type="range" min="1" max="200" step="1" onchange="red_wave.wavelength=Number(this.value);">
 	</div>
 		<div class="controller">
 		<h3>Blue wave</h3>
-		<label>Speed:</label><br><input type="range" min="-10" max="10" step="0.1" onchange="blue_wave.speed=Number(this.value);">
-		<label>Amplitude:</label><br><input type="range" min="0" max="200" step="0.1" onchange="blue_wave.amplitude=Number(this.value);">
-		<label>Wavelength:</label><br><input type="range" min="10" max="100" step="0.1" onchange="blue_wave.wavelength=Number(this.value);">
+		<label>Speed:</label><input type="range" min="-10" max="10" step="0.1" onchange="blue_wave.speed=Number(this.value);">
+		<label>Amplitude:</label><input type="range" min="0" max="200" step="0.1" onchange="blue_wave.amplitude=Number(this.value);">
+		<label>Wavelength:</label><input type="range" min="1" max="200" step="1" onchange="blue_wave.wavelength=Number(this.value);">
 	</div>
 </body>
 </html>
