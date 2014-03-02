@@ -7,7 +7,7 @@ http://htmlpreview.github.io/?https://raw.github.com/folkol/interference/master/
 
 http://area.autodesk.com/blogs/chris/introduction-to-pixel-shaders-using-glsl
 http://www.packtpub.com/article/opengl-glsl-4-shaders-basics
-http://glsl.heroku.com/e#14698.2
+http://glsl.heroku.com/e#14698.5
 
 
 
@@ -20,17 +20,23 @@ uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
 
-void main( void ) {
-     float speed = 3.0;
-     float wavelength = 100.0;
-     float amplitude = 0.2;
+#define SPEED 10.0
+#define WAVELENGTH 75.0 // Higher number = shorter wavelength :P
+#define AMPLITUDE 0.2
+#define NUMPAIRS 1
 
-     vec2 position = ( gl_FragCoord.xy / resolution.xy );
-     vec2 wave_one_pos = mouse;
-     vec2 wave_two_pos = vec2(1.0, 1.0) - mouse;
-     float wave_one_color = 0.5 + amplitude * sin(-speed * time + wavelength * distance(position, wave_one_pos));
-     float wave_two_color = 0.5 + amplitude * sin(-speed * time + wavelength * distance(position, wave_two_pos));
-     float color = (wave_one_color + wave_two_color) / 2.0;
-
-     gl_FragColor = vec4( color, 0, color, 1 );
+void main( void ) {     
+  vec2 position = ( gl_FragCoord.xy / resolution.xy );
+  float color = 0.0;
+  for(int c = 1; c <= NUMPAIRS; c++) {
+    vec2 endpoint = mouse - vec2(0.5, 0.5);
+    vec2 wave_one_pos = vec2(0.5, 0.5) + (endpoint/float(NUMPAIRS))*float(c);
+    vec2 wave_two_pos = vec2(1.0, 1.0) - wave_one_pos;
+    float wave_one_color = 0.5 + AMPLITUDE * sin(-SPEED * time + WAVELENGTH * distance(position, wave_one_pos));
+    float wave_two_color = 0.5 + AMPLITUDE * sin(-SPEED * time + WAVELENGTH * distance(position, wave_two_pos));
+    color += wave_one_color + wave_two_color;
+  }
+  color /= float(NUMPAIRS * 2);
+                                                                                                                                                                                                                                                                                        
+  gl_FragColor = vec4( color, color, color, 1 );
 }
