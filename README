@@ -1,15 +1,21 @@
 2d_top: Click and drag to move wave source 2
 2d_side: Move the sliders
 
-http://htmlpreview.github.io/?https://raw.github.com/folkol/interference/master/2d_top.html
-http://htmlpreview.github.io/?https://raw.github.com/folkol/interference/master/2d_side.html
+
+2d side: http://htmlpreview.github.io/?https://raw.github.com/folkol/interference/master/2d_side.html
+2d top: http://htmlpreview.github.io/?https://raw.github.com/folkol/interference/master/2d_top.html
+3d top: http://glsl.heroku.com/e#14698.5
 
 
+
+
+
+
+
+
+Resources:
 http://area.autodesk.com/blogs/chris/introduction-to-pixel-shaders-using-glsl
 http://www.packtpub.com/article/opengl-glsl-4-shaders-basics
-http://glsl.heroku.com/e#14698.5
-
-
 
 // Fragment shader:
 #ifdef GL_ES
